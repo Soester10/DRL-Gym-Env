@@ -1,0 +1,34 @@
+import math
+import gym
+from MountainCar_DQN import MountainCar_DQN
+from MountainCar_Game import MountainCar_Game
+
+
+env = gym.make("MountainCar-v0")
+
+min_len4train = 100
+max_len4train = 50_000
+DISCOUNT = 0.90
+min_batch = 64
+Batch_Size = 32
+SHOW_EVERY = 200
+UPDATE_SECONDARY_WEIGHTS = False
+UPDATE_SECONDARY_WEIGHTS_NUM = 4
+
+EPISODES = 2000
+
+epsilon = 1
+epsilon_mul_value = math.log(0.01, 10)/(EPISODES * 0.8)
+epsilon_mul_value = math.pow(10, epsilon_mul_value)
+
+
+
+#main
+
+Neuron = MountainCar_DQN(max_len4train, UPDATE_SECONDARY_WEIGHTS, min_batch, min_len4train, DISCOUNT, Batch_Size)
+
+MountainCar_Game(Neuron, env, EPISODES, min_len4train, epsilon, epsilon_mul_value, SHOW_EVERY, UPDATE_SECONDARY_WEIGHTS_NUM)
+
+#saving model and weights
+Neuron.model.save_weights("weights")
+Neuron.model.save("model.h5")
