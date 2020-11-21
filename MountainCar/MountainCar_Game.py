@@ -14,9 +14,7 @@ def MountainCar_Game(Neuron, env, EPISODES, min_len4train, epsilon, epsilon_mul_
         else:
             render = False
 
-        ste = 0
         while not done:
-            ste+=1
 
             if np.random.random() > epsilon and episode>min_len4train:
                 action = np.argmax(Neuron.nn_predicting(np.array(init_state)))
@@ -39,7 +37,7 @@ def MountainCar_Game(Neuron, env, EPISODES, min_len4train, epsilon, epsilon_mul_
                 Neuron.nn_training()
 
             if done:
-                if episode%UPDATE_SECONDARY_WEIGHTS_NUM == 0:
+                if episode % UPDATE_SECONDARY_WEIGHTS_NUM == 0:
                     Neuron.UPDATE_SECONDARY_WEIGHTS = True
                 break
 
